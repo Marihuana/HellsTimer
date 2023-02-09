@@ -8,4 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="luminescent">#6AFF41</color>
+
+    <color name="positive">#B1F396</color>
+    <color name="negative">#F39696</color>
 </resources>
