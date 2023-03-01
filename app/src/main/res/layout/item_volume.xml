@@ -6,33 +6,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvNo"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvName"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btnState"
+        android:gravity="center"
         tools:text="Set 1"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="@dimen/defaultFontSize"
         />
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/btnState"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintLeft_toRightOf="@id/tvNo"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:icon="@drawable/ic_arrow_down"
-        app:iconSize="20dp"
-        app:iconGravity="end"
-        android:background="@android:color/transparent"
-        tools:text="success"
+        app:layout_constraintLeft_toRightOf="@id/tvName"
+        app:layout_constraintRight_toRightOf="parent"
+        android:gravity="center"
+        tools:text="sucss"
         android:text="-"
         android:textSize="@dimen/defaultFontSize"
-        android:textColor="@color/positive"
+        android:textColor="@color/black"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
