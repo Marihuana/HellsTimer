@@ -6,12 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import kr.yooreka.hellstimer.data.model.WorkoutSet
 import kr.yooreka.hellstimer.databinding.ItemRecordBinding
 import kr.yooreka.hellstimer.ui.home.model.RecordVO
 
 class RecordAdapter(
     private val listener : OnRecordItemClickListener
-    ) : ListAdapter<RecordVO, RecordAdapter.RecordViewHolder>(RecordDiffUtil) {
+    ) : ListAdapter<WorkoutSet, RecordAdapter.RecordViewHolder>(RecordDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordViewHolder {
         return LayoutInflater.from(parent.context).let { inflater ->
@@ -29,7 +30,7 @@ class RecordAdapter(
         private val binding: ItemRecordBinding,
         private val listener : OnRecordItemClickListener
     ) : ViewHolder(binding.root){
-        private lateinit var item : RecordVO
+        private lateinit var item : WorkoutSet
 
         init {
             binding.root.setOnClickListener { v ->
@@ -37,24 +38,24 @@ class RecordAdapter(
             }
         }
 
-        fun bind(item : RecordVO, position: Int){
+        fun bind(item : WorkoutSet, position: Int){
             this.item = item
             binding.tvNo.text = "SET ${position + 1}"
-            binding.tvState.text = if(item.isSuccess) "SUCCESS" else "FAIL"
+            binding.tvState.text = if(item.success) "SUCCESS" else "FAIL"
         }
     }
 
     interface OnRecordItemClickListener {
-        fun onItemClicked(view : View, item: RecordVO)
+        fun onItemClicked(view : View, item: WorkoutSet)
     }
 }
 
-object RecordDiffUtil : DiffUtil.ItemCallback<RecordVO>(){
-    override fun areItemsTheSame(oldItem: RecordVO, newItem: RecordVO): Boolean {
-        return oldItem.number == newItem.number
+object RecordDiffUtil : DiffUtil.ItemCallback<WorkoutSet>(){
+    override fun areItemsTheSame(oldItem: WorkoutSet, newItem: WorkoutSet): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: RecordVO, newItem: RecordVO): Boolean {
+    override fun areContentsTheSame(oldItem: WorkoutSet, newItem: WorkoutSet): Boolean {
         return oldItem == newItem
     }
 }

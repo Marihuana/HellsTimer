@@ -7,7 +7,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import kr.yooreka.hellstimer.TempApplication
+import kr.yooreka.hellstimer.data.model.WorkoutSet
 import kr.yooreka.hellstimer.databinding.FragmentHomeBinding
 import kr.yooreka.hellstimer.ui.home.adapter.RecordAdapter
 import kr.yooreka.hellstimer.ui.home.adapter.VolumeAdapter
@@ -15,9 +20,18 @@ import kr.yooreka.hellstimer.ui.home.model.RecordVO
 import kr.yooreka.hellstimer.ui.home.model.VolumeVO
 
 class HomeFragment : Fragment(), RecordAdapter.OnRecordItemClickListener, VolumeAdapter.OnVolumeItemClickListener {
-    private val viewModel : HomeViewModel by viewModels()
+//    private val viewModel : HomeViewModel by viewModels()
     private val recordAdapter = RecordAdapter(this)
     private val volumeAdapter = VolumeAdapter(this)
+
+    private val viewModel: HomeViewModel by viewModels {
+        (activity?.application as TempApplication).let { app ->
+            HomeViewModel.HomeViewModelFactory(
+                app.database.workoutSessionDao(),
+                app.database.workoutSetDao()
+            )
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -96,20 +110,28 @@ class HomeFragment : Fragment(), RecordAdapter.OnRecordItemClickListener, Volume
             binding.btnDone.visibility = visibility
         }
 
-        viewModel.record.observe(viewLifecycleOwner){ list ->
-            recordAdapter.submitList(list)
+        lifecycle.coroutineScope.launch{
+            viewModel.getSets().collect(recordAdapter::submitList)
         }
+
+//        viewModel.record.observe(viewLifecycleOwner){ list ->
+//            recordAdapter.submitList(list)
+//        }
 
         viewModel.volume.observe(viewLifecycleOwner){ list ->
             volumeAdapter.submitList(list)
         }
     }
 
-    override fun onItemClicked(view: View, item: RecordVO) {
-        Toast.makeText(context, "세트 상세 다이얼로그 나와야됨", Toast.LENGTH_SHORT).show()
-    }
+//    override fun onItemClicked(view: View, item: RecordVO) {
+//
+//    }
 
     override fun onItemClicked(view: View, item: VolumeVO) {
         Toast.makeText(context, "운동 상세 다이얼로그 나와야됨", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onItemClicked(view: View, item: WorkoutSet) {
+        Toast.makeText(context, "세트 상세 다이얼로그 나와야됨", Toast.LENGTH_SHORT).show()
     }
 }
