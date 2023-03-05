@@ -1,4 +1,4 @@
-package kr.yooreka.hellstimer.ui.home.adapter
+package kr.yooreka.hellstimer.presentation.timer.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kr.yooreka.hellstimer.databinding.ItemVolumeBinding
-import kr.yooreka.hellstimer.ui.home.model.VolumeVO
+import kr.yooreka.hellstimer.domain.model.VolumeVO
 
 class VolumeAdapter(
     private val listener : OnVolumeItemClickListener

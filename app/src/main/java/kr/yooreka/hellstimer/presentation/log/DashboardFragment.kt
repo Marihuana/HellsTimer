@@ -1,4 +1,4 @@
-package kr.yooreka.hellstimer.ui.dashboard
+package kr.yooreka.hellstimer.presentation.log
 
 import android.os.Bundle
 import android.view.LayoutInflater

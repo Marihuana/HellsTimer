@@ -1,4 +1,4 @@
-package kr.yooreka.hellstimer.ui.home
+package kr.yooreka.hellstimer.presentation.timer
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,15 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kr.yooreka.hellstimer.TempApplication
 import kr.yooreka.hellstimer.data.model.WorkoutSet
 import kr.yooreka.hellstimer.databinding.FragmentHomeBinding
-import kr.yooreka.hellstimer.ui.home.adapter.RecordAdapter
-import kr.yooreka.hellstimer.ui.home.adapter.VolumeAdapter
-import kr.yooreka.hellstimer.ui.home.model.RecordVO
-import kr.yooreka.hellstimer.ui.home.model.VolumeVO
+import kr.yooreka.hellstimer.presentation.timer.adapter.RecordAdapter
+import kr.yooreka.hellstimer.presentation.timer.adapter.VolumeAdapter
+import kr.yooreka.hellstimer.domain.model.VolumeVO
 
 class HomeFragment : Fragment(), RecordAdapter.OnRecordItemClickListener, VolumeAdapter.OnVolumeItemClickListener {
 //    private val viewModel : HomeViewModel by viewModels()

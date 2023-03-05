@@ -1,4 +1,4 @@
-package kr.yooreka.hellstimer.ui.dashboard
+package kr.yooreka.hellstimer.presentation.log
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
