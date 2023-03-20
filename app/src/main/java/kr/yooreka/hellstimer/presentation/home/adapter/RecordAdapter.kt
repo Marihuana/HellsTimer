@@ -1,4 +1,4 @@
-package kr.yooreka.hellstimer.presentation.timer.adapter
+package kr.yooreka.hellstimer.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.View

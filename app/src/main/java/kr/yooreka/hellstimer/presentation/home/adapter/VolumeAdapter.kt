@@ -1,4 +1,4 @@
-package kr.yooreka.hellstimer.presentation.timer.adapter
+package kr.yooreka.hellstimer.presentation.home.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -40,7 +40,7 @@ class VolumeAdapter(
         fun bind(item : VolumeVO, position: Int){
             this.item = item
             binding.tvName.text = "SET ${position + 1}"
-            binding.btnState.text = if(item.isSuccess) "SUCCESS" else "FAIL"
+            binding.btnState.text = if(item.success()) "SUCCESS" else "FAIL"
         }
     }
 
