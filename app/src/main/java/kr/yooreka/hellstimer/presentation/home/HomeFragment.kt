@@ -1,6 +1,9 @@
-package kr.yooreka.hellstimer.presentation.timer
+package kr.yooreka.hellstimer.presentation.home
 
+import android.app.TimePickerDialog
 import android.os.Bundle
+import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +16,16 @@ import kotlinx.coroutines.launch
 import kr.yooreka.hellstimer.TempApplication
 import kr.yooreka.hellstimer.data.model.WorkoutSet
 import kr.yooreka.hellstimer.databinding.FragmentHomeBinding
-import kr.yooreka.hellstimer.presentation.timer.adapter.RecordAdapter
-import kr.yooreka.hellstimer.presentation.timer.adapter.VolumeAdapter
+import kr.yooreka.hellstimer.presentation.home.adapter.RecordAdapter
+import kr.yooreka.hellstimer.presentation.home.adapter.VolumeAdapter
 import kr.yooreka.hellstimer.domain.model.VolumeVO
+import kr.yooreka.hellstimer.presentation.home.dialog.SetTimerDialog
 
 class HomeFragment : Fragment(), RecordAdapter.OnRecordItemClickListener, VolumeAdapter.OnVolumeItemClickListener {
 //    private val viewModel : HomeViewModel by viewModels()
     private val recordAdapter = RecordAdapter(this)
     private val volumeAdapter = VolumeAdapter(this)
+
 
     private val viewModel: HomeViewModel by viewModels {
         (activity?.application as TempApplication).let { app ->
@@ -40,6 +45,16 @@ class HomeFragment : Fragment(), RecordAdapter.OnRecordItemClickListener, Volume
         bindView(binding)
         subscribeUI(binding)
 
+        binding.chronometer.apply {
+            base = SystemClock.elapsedRealtime() + 5 * 1000
+            setOnChronometerTickListener {
+                //타이머가 0이되면 타이머가 종료되도록 한다.
+                if (it.text == "00:00") {
+                    it.stop()
+                }
+            }
+        }
+
         return binding.root
     }
 
@@ -56,7 +71,13 @@ class HomeFragment : Fragment(), RecordAdapter.OnRecordItemClickListener, Volume
             Toast.makeText(context, "횟수 고치는 다이얼로그 나와야됨", Toast.LENGTH_SHORT).show()
         }
 
+        binding.chronometer.setOnClickListener {
+            SetTimerDialog(requireContext()).show()
+        }
+
         binding.btnStart.setOnClickListener {
+            binding.chronometer.base = SystemClock.elapsedRealtime() + 5 * 1000
+            binding.chronometer.start()
             viewModel.performStartButton()
         }
 
@@ -65,10 +86,12 @@ class HomeFragment : Fragment(), RecordAdapter.OnRecordItemClickListener, Volume
         }
 
         binding.btnSuccess.setOnClickListener {
+            binding.chronometer.stop()
             viewModel.performSuccessButton()
         }
 
         binding.btnFail.setOnClickListener {
+            binding.chronometer.stop()
             viewModel.performFailButton()
         }
 
@@ -131,5 +154,9 @@ class HomeFragment : Fragment(), RecordAdapter.OnRecordItemClickListener, Volume
 
     override fun onItemClicked(view: View, item: WorkoutSet) {
         Toast.makeText(context, "세트 상세 다이얼로그 나와야됨", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
     }
 }

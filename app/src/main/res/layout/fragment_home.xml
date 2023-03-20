@@ -5,7 +5,7 @@
     android:background="@color/black"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.timer.HomeFragment">
+    tools:context=".presentation.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loCurrent"
@@ -202,18 +202,15 @@
         app:layout_constraintBottom_toTopOf="@id/loVolume"
         app:layout_constraintHeight_percent="0.4">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTimer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:text="00:00"
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:textColor="@color/luminescent"
-            android:textSize="132dp"
+            android:autoSizeTextType="uniform"
             android:textStyle="bold"
+            android:countDown="true"
             />
 
 

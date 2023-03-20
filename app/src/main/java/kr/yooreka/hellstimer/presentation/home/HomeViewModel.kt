@@ -1,4 +1,4 @@
-package kr.yooreka.hellstimer.presentation.timer
+package kr.yooreka.hellstimer.presentation.home
 
 import android.util.Log
 import android.view.View
@@ -34,7 +34,10 @@ class HomeViewModel(
         const val DEFAULT_NAME : String = "WORKOUT"
         const val DEFAULT_ITERATION : Int = 10
         const val DEFAULT_WEIGHT : Float = 5.0f
+
     }
+
+    private val timerRegex = """^(\d{1,2}):?(\d{1,2})?$""".toRegex()
 
     private val _name = MutableLiveData(DEFAULT_NAME)
     val name: LiveData<String> = _name
@@ -44,6 +47,8 @@ class HomeViewModel(
 
     private val _iteration = MutableLiveData(DEFAULT_ITERATION)
     val iteration: LiveData<Int> = _iteration
+
+
 
     fun getSets() : Flow<List<WorkoutSet>> = setDao.getSetsForSession(0)
 //    private val _record = MutableLiveData<ArrayList<RecordVO>>(arrayListOf())
@@ -112,6 +117,17 @@ class HomeViewModel(
 //        }.also {
 //            _btnDoneVisibility.value = View.VISIBLE
 //        }
+    }
+
+    fun convertToTime(input: Int): String {
+        val regex = """^(\d+)(\d{2})$""".toRegex()
+        val matchResult = regex.find(input.toString())
+        return if (matchResult != null) {
+            val (minute, second) = matchResult.destructured
+            "${minute.padStart(2, '0')}:${second.padStart(2, '0')}"
+        } else {
+            "00:00"
+        }
     }
 
     private fun addVolume(){
